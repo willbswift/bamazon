@@ -18,6 +18,7 @@ var connection = mysql.createConnection({
 
 // connect to the mysql server and sql database
 connection.connect(function(err) {
+  console.log("connected as id " + connection.threadId);
   if (err) throw err;
   // run the start function after the connection is made to prompt the user
   start();
@@ -25,139 +26,94 @@ connection.connect(function(err) {
 
 // function which displays availvible products and prompts the user type id number of product they wish to buy.  
 function start() {
+  queryAllProducts();
+  buyStuff();
+};
 
-//display availible products
-
-
-  inquirer
-    .prompt({
-        name: "itemID",
-        type: "input",
-        message: "Input the ID number of the item you wish to purchase",
-        validate: function(value) {
-            if (isNaN(value) === false) {
-            return true;
-            }
-            return false;
-        }
-    })
-    .then(function(answer) {
-
-    });
+function queryAllProducts() {
+  connection.query("SELECT * FROM products", function(err, results) {
+    console.log(results);
+    for (let i = 0; i < results.length; i++) {
+      console.log("Welcome to Quarks Black Market Sales.  Here is what we have for sale today...");
+      console.log("Item ID# | Product Name | Type | Price(Latinum) | Stock");
+      console.log(results[i].item_id + " | " + results[i].product_name + " | " + results[i].department_name + " | $" + results[i].price + " | " + results[i].stock_quantity);
+    }
+    console.log("-----------------------------------");
+  });
 }
 
-//updating table in MySQL
-// UPDATE bamazon_db.products
-// SET stock_quantity=---NEW VALUE---
-// WHERE item_id=---PURCHASED ID NUMBER--- ;
-
-
-// function to handle posting new items up for auction
-function postAuction() {
-  // prompt for info about the item being put up for auction
+// function to handle buying stuff
+function buyStuff() {
+  // The app should then prompt users with two messages.
   inquirer
+    // prompt for info about the item being purchased
     .prompt([
-      {
-        name: "item",
-        type: "input",
-        message: "What is the item you would like to submit?"
-      },
-      {
-        name: "category",
-        type: "input",
-        message: "What category would you like to place your auction in?"
-      },
-      {
-        name: "startingBid",
-        type: "input",
-        message: "What would you like your starting bid to be?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
-      }
-    ])
-    .then(function(answer) {
-      // when finished prompting, insert a new item into the db with that info
-      connection.query(
-        "INSERT INTO auctions SET ?",
+          // The first should ask them the ID of the product they would like to buy.
         {
-          item_name: answer.item,
-          category: answer.category,
-          starting_bid: answer.startingBid,
-          highest_bid: answer.startingBid
-        },
-        function(err) {
-          if (err) throw err;
-          console.log("Your auction was created successfully!");
-          // re-prompt the user for if they want to bid or post
-          start();
-        }
-      );
-    });
-}
-
-function bidAuction() {
-  // query the database for all items being auctioned
-  connection.query("SELECT * FROM auctions", function(err, results) {
-    if (err) throw err;
-    // once you have the items, prompt the user for which they'd like to bid on
-    inquirer
-      .prompt([
-        {
-          name: "choice",
-          type: "rawlist",
-          choices: function() {
-            var choiceArray = [];
-            for (var i = 0; i < results.length; i++) {
-              choiceArray.push(results[i].item_name);
-            }
-            return choiceArray;
-          },
-          message: "What auction would you like to place a bid in?"
-        },
-        {
-          name: "bid",
+          name: "itemID",
           type: "input",
-          message: "How much would you like to bid?"
+          message: "Type the ID number of the item you wish to purchase",
+          validate: function(value) {
+              if (isNaN(value) === false) {
+              return true;
+              }
+              return false;
+          }
+        },
+        // The second message should ask how many units of the product they would like to buy.
+        {
+          name: "quantity",
+          type: "input",
+          message: "How many do you wish to purchase?"
         }
       ])
-      .then(function(answer) {
-        // get the information of the chosen item
-        var chosenItem;
-        for (var i = 0; i < results.length; i++) {
-          if (results[i].item_name === answer.choice) {
+    .then(function(answer) {
+      // get the information of the chosen item
+      let chosenItem;
+        for (let i = 0; i < results.length; i++) {
+          if (results[i].item_id === answer.itemID) {
             chosenItem = results[i];
           }
-        }
-
-        // determine if bid was high enough
-        if (chosenItem.highest_bid < parseInt(answer.bid)) {
-          // bid was high enough, so update db, let the user know, and start over
+        }  
+        // determine if there is enough of that item
+        if (chosenItem.stock_quantity <= parseInt(answer.quantity)) {
+          newQuantity = chosenItem.stock_quantity - parseInt(answer.quantity);
+          // the quantity was high enough, so update db, let the user know, 
           connection.query(
-            "UPDATE auctions SET ? WHERE ?",
+            "UPDATE products SET ? WHERE ?",
             [
+              // This means updating the SQL database to reflect the remaining quantity.
               {
-                highest_bid: answer.bid
+                stock_quantity: newQuantity
               },
               {
-                id: chosenItem.id
+                item_id: chosenItem.id
               }
             ],
             function(error) {
               if (error) throw err;
-              console.log("Bid placed successfully!");
+              // fulfill the customer's order.
+              console.log("Transaction completed!");
+
+// Once the update goes through, show the customer the total cost of their purchase.
+
+
+              // start over
               start();
             }
           );
         }
         else {
-          // bid wasn't high enough, so apologize and start over
-          console.log("Your bid was too low. Try again...");
+          // If not, the app should log a phrase like `Insufficient quantity!`, and then prevent the order from going through.
+          console.log("I told you I don't have that many! Try again...");
+          // start over
           start();
         }
-      });
-  });
-}
+
+
+        
+
+
+
+
+

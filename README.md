@@ -18,5 +18,6 @@ If you decide to make another purchase, the process repeats.  You can note that 
 ...Until you choose not to make another purchase, at which point the program thanks you and exits back to the command line.  
 	[click here for screen cap](https://drive.google.com/open?id=1xcjVXE1gyqM5NYvHTP7OndbuGxkinHmA)
 
+Enjoy, but don't let Constable Odo catch you using it!
 
 - William B. Swift (creator and fan)

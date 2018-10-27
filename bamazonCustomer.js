@@ -1,8 +1,7 @@
 let mysql = require("mysql");
 let inquirer = require("inquirer");
 let confirm = require('inquirer-confirm');
-
-const cTable = require('console.table');
+let cTable = require('console.table');
 
 // create the connection information for the sql database
 let connection = mysql.createConnection({
@@ -20,7 +19,7 @@ let connection = mysql.createConnection({
 });
 
 // connect to the mysql server and sql database
-connection.connect(function(err) {
+connection.connect(function (err) {
   //console.log("connected as id " + connection.threadId);
   if (err) throw err;
   console.log("-------------------------------------------------------------------------");
@@ -35,7 +34,7 @@ function start() {
 };
 
 function queryAllProducts() {
-  connection.query("SELECT * FROM products", function(err, results) {
+  connection.query("SELECT * FROM products", function (err, results) {
     //console.log(results);
     console.log("Here is what we have for sale today...");
     console.log("-------------------------------------------------------------------------");
@@ -55,32 +54,32 @@ function buyStuff(results) {
   inquirer
     // prompt for info about the item being purchased
     .prompt([
-          // The first should ask them the ID of the product they would like to buy.
-        {
-          name: "itemID",
-          type: "input",
-          message: "Type the ID number of the item you wish to purchase.",
-          validate: function(value) {
-              if (isNaN(value) === false) {
-              return true;
-              }
-              return false;
-          }
-        },
-        // The second message should ask how many units of the product they would like to buy.
-        {
-          name: "quantity",
-          type: "input",
-          message: "How many do you wish to purchase?",
-          validate: function(value) {
-            if (isNaN(value) === false) {
+      // The first should ask them the ID of the product they would like to buy.
+      {
+        name: "itemID",
+        type: "input",
+        message: "Type the ID number of the item you wish to purchase.",
+        validate: function (value) {
+          if (isNaN(value) === false) {
             return true;
-            }
-            return false;
+          }
+          return false;
         }
+      },
+      // The second message should ask how many units of the product they would like to buy.
+      {
+        name: "quantity",
+        type: "input",
+        message: "How many do you wish to purchase?",
+        validate: function (value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
         }
-      ])
-    .then(function(answer) {
+      }
+    ])
+    .then(function (answer) {
       // get the information of the chosen item
       //console.log(answer.itemID);
       //console.log(answer.quantity);
@@ -91,7 +90,7 @@ function buyStuff(results) {
         if (results[i].item_id === parseInt(answer.itemID)) {
           chosenItem = results[i];
         }
-      }  
+      }
       // determine if there is enough of that item
       if (parseInt(answer.quantity) <= chosenItem.stock_quantity) {
         newQuantity = chosenItem.stock_quantity - parseInt(answer.quantity);
@@ -108,7 +107,7 @@ function buyStuff(results) {
               item_id: chosenItem.item_id
             }
           ],
-          function(error) {
+          function (error) {
             if (error) throw err;
             console.log(newQuantity);
             // fulfill the customer's order.
@@ -117,15 +116,13 @@ function buyStuff(results) {
             let totalCost = parseInt(answer.quantity) * chosenItem.price
             console.log("Total Cost of the " + chosenItem.product_name + " is $" + totalCost);
             console.log("I'm sure I must have something else you would like!");
-              // ask if they wish to continue
-              let confirm = require('inquirer-confirm');
-              confirm('Would you like to buy something else?')
-                .then(function confirmed() 
-                {
-                  // start over
-                  start();
-                }, function cancelled() 
-                {
+            // ask if they wish to continue
+            let confirm = require('inquirer-confirm');
+            confirm('Would you like to buy something else?')
+              .then(function confirmed() {
+                // start over
+                start();
+              }, function cancelled() {
                   console.log("Sorry to hear that.  Do check back later!");
                   let code = 0;
                   process.exit(code);

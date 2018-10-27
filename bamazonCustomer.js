@@ -109,7 +109,7 @@ function buyStuff(results) {
           ],
           function (error) {
             if (error) throw err;
-            console.log(newQuantity);
+            //console.log(newQuantity);
             // fulfill the customer's order.
             console.log("Transaction completed!");
             // Once the update goes through, show the customer the total cost of their purchase.

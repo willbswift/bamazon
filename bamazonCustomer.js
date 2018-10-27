@@ -2,6 +2,8 @@ let mysql = require("mysql");
 let inquirer = require("inquirer");
 let confirm = require('inquirer-confirm');
 
+const cTable = require('console.table');
+
 // create the connection information for the sql database
 let connection = mysql.createConnection({
   host: "localhost",
@@ -21,7 +23,8 @@ let connection = mysql.createConnection({
 connection.connect(function(err) {
   //console.log("connected as id " + connection.threadId);
   if (err) throw err;
-  console.log("Welcome to Quarks Black Market Sales!");
+  console.log("-------------------------------------------------------------------------");
+  console.log("WELCOME TO QUARK'S BLACK MARKET SALES!");
   // run the start function after the connection is made to prompt the user
   start();
 });
@@ -35,12 +38,13 @@ function queryAllProducts() {
   connection.query("SELECT * FROM products", function(err, results) {
     //console.log(results);
     console.log("Here is what we have for sale today...");
-    console.log("-----------------------------------");
+    console.log("-------------------------------------------------------------------------");
+    console.table(results);
     //console.log("ID#   | Product Name | Type | Price(Latinum) | Stock");
-    for (let i = 0; i < results.length; i++) {
-      console.log("ID# " + results[i].item_id + " | " + results[i].product_name + " | " + results[i].department_name + " | Price $" + results[i].price + " | Stock " + results[i].stock_quantity);
-    }
-    console.log("-----------------------------------");
+    // for (let i = 0; i < results.length; i++) {
+    //   console.log("ID# " + results[i].item_id + " | " + results[i].product_name + " | " + results[i].department_name + " | Price $" + results[i].price + " | Stock " + results[i].stock_quantity);
+    // }
+    console.log("-------------------------------------------------------------------------");
     buyStuff(results);
   });
 }
@@ -111,7 +115,7 @@ function buyStuff(results) {
             console.log("Transaction completed!");
             // Once the update goes through, show the customer the total cost of their purchase.
             let totalCost = parseInt(answer.quantity) * chosenItem.price
-            console.log("Total Cost is $" + totalCost);
+            console.log("Total Cost of the " + chosenItem.product_name + " is $" + totalCost);
             console.log("I'm sure I must have something else you would like!");
               // ask if they wish to continue
               let confirm = require('inquirer-confirm');
@@ -122,7 +126,7 @@ function buyStuff(results) {
                   start();
                 }, function cancelled() 
                 {
-                  console.log('sorry to hear that');
+                  console.log("Sorry to hear that.  Do check back later!");
                   let code = 0;
                   process.exit(code);
                 });

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/willbswift/bamazon#readme",
   "dependencies": {
     "chalk": "^2.4.1",
+    "console.table": "^0.10.0",
     "escape-string-regexp": "^1.0.5",
     "inquirer": "^6.2.0",
     "inquirer-confirm": "^2.0.0",

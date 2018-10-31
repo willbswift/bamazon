@@ -28,4 +28,4 @@ If you decide to make another purchase, the process repeats.  You can note that 
 
 Enjoy, but don't let Constable Odo catch you using it!
 
-- William B. Swift (creator and fan)
+- William B. Swift (creator and fan~!)

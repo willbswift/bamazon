@@ -24,5 +24,6 @@
     "inquirer-confirm": "^2.0.0",
     "mysql": "^2.16.0",
     "supports-color": "^5.5.0"
-  }
+  },
+  "devDependencies": {}
 }

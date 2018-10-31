@@ -2,7 +2,8 @@
 
 This is the ReadMe file for my Amazon Bulk Sales Simulator node program. It was the assignment for the 11th week at Web Developer Boot Camp.  Its called Bamazon and it will simulate purchasing stolen merchandise from a Ferengi named Quark.
 
-To use it one needs to run "node bamazonCustomer.js" in git-bash.  This will present you with a list of available products, with the associated costs and stock numbers.  
+To use it one needs to run "node bamazonCustomer.js" in git-bash.  This will present you with a list of available products, with the associated costs and stock numbers.
+![alt text](/image1.jpg?raw=true "first pic")  
 	[click here for screen cap](https://drive.google.com/open?id=1Ls-mekG3JdX668jkXHa70LnC4rcEN44Q)
 
 Once the ID number of desired item is selected then the program prompts the user for the number of items they wish to purchase.

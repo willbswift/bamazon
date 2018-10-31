@@ -4,26 +4,27 @@ This is the ReadMe file for my Amazon Bulk Sales Simulator node program. It was 
 
 To use it one needs to run "node bamazonCustomer.js" in git-bash.  This will present you with a list of available products, with the associated costs and stock numbers.
 
-
 ![alt text](/Image1.jpg?raw=true "first pic" ) 
 
-
-
-
-	[click here for screen cap](https://drive.google.com/open?id=1Ls-mekG3JdX668jkXHa70LnC4rcEN44Q)
-
 Once the ID number of desired item is selected then the program prompts the user for the number of items they wish to purchase.
-   	[click here for screen cap](https://drive.google.com/open?id=1sYSXfEGBsxo62m5Q1eFO0kJlPJCCBzBP)
+
+![alt text](/Image2.jpg?raw=true "2nd pic" ) 
+
 If one request more of a product then is in stock you get an error message.
- 	[click here for screen cap](https://drive.google.com/open?id=19r2gEQc9n6bRyZhdJXW09YRCx8CwEwkv)
+
+![alt text](/Image3.jpg?raw=true "third pic" ) 
 
 Once a viable ID Number and number of purchases are entered the program reports how many remain in the inventory, tells you the total cost of your purchase, and asks if you would like to make another purchase.  
-	[click here for screen cap](https://drive.google.com/open?id=1EG0jIcgKkRCkg0XEwwn6crY2mwnq6OHP)
+
+![alt text](/Image4.jpg?raw=true "fourth pic" ) 
 
 If you decide to make another purchase, the process repeats.  You can note that the inventory has been updated reflecting the previous purchases.    
-	[click here for screen cap](https://drive.google.com/open?id=1cg3eCqAIcPxFDhPSPoYmSTDvEhsM5gyl)
+
+![alt text](/Image5.jpg?raw=true "fourth pic" ) 
+
 ...Until you choose not to make another purchase, at which point the program thanks you and exits back to the command line.  
-	[click here for screen cap](https://drive.google.com/open?id=1xcjVXE1gyqM5NYvHTP7OndbuGxkinHmA)
+
+![alt text](/Image6.jpg?raw=true "fourth pic" ) 
 
 Enjoy, but don't let Constable Odo catch you using it!
 

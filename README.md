@@ -5,7 +5,7 @@ This is the ReadMe file for my Amazon Bulk Sales Simulator node program. It was 
 To use it one needs to run "node bamazonCustomer.js" in git-bash.  This will present you with a list of available products, with the associated costs and stock numbers.
 
 
-![alt text](/image1.jpg?raw=true "first pic" ) 
+![alt text](/Image1.jpg?raw=true "first pic" ) 
 
 
 

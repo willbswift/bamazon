@@ -12,7 +12,7 @@ Once the ID number of desired item is selected then the program prompts the user
 
 If one request more of a product then is in stock you get an error message.
 
-![alt text](/Image3.jpg?raw=true "third pic" ) 
+![alt text](/Image7.jpg?raw=true "seventh pic" ) 
 
 Once a viable ID Number and number of purchases are entered the program reports how many remain in the inventory, tells you the total cost of your purchase, and asks if you would like to make another purchase.  
 
